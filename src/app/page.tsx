@@ -6,10 +6,7 @@ import SearchBar from "@/components/search-bar";
 
 export default function Home() {
   return (
-    <div
-      // style={{ backgroundSize: '100% 120%' }}
-      className="relative w-full h-screen bg-[#111112] shadow-inner backdrop-blur-3xl"
-    >
+    <div className="relative w-full h-screen shadow-inner backdrop-blur-3xl">
       <SearchBar />
     </div>
   );
