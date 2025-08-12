@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Geist, Geist_Mono, Roboto, Montserrat } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 
 const geistSans = Geist({
@@ -11,6 +11,10 @@ const geistSans = Geist({
 
 const roboto = Roboto({
   variable: "--font-roboto",
+  subsets: ["latin"],
+});
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -32,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistMono.variable} ${geistSans.variable} ${roboto.variable} bg-[#111112] antialiased `}
+        className={`${geistMono.variable} ${geistSans.variable} ${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
       >
         <SidebarProvider className="bg-transparent">
           <AppSidebar />

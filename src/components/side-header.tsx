@@ -7,7 +7,7 @@ export default function SideHeader() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
-        <SidebarTrigger className="text-white hover:bg-neutral-800 hover:text-white cursor-pointer" />
+        <SidebarTrigger className="text-white hover:bg-neutral-800 ml-0.5 hover:text-white cursor-pointer" />
         <h4
           className={`text-white font-roboto font-semibold text-md ${
             state === "collapsed" ? "hidden" : ""
