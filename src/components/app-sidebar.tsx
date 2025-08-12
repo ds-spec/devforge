@@ -9,6 +9,7 @@ import {
   useSidebar,
 } from "./ui/sidebar";
 import ProjectNavItems from "./projects-navitems";
+import MainChats from "./main-chats";
 
 export default function AppSidebar() {
   const data = {
@@ -34,6 +35,20 @@ export default function AppSidebar() {
         icon: Bookmark,
       },
     ],
+    chats: [
+      {
+        name: "How to build a mind map",
+        url: "#",
+      },
+      {
+        name: "Build research docs from scratch",
+        url: "#",
+      },
+      {
+        name: "How synth is different from all the research apps?",
+        url: "#",
+      },
+    ],
   };
   const { state } = useSidebar();
   console.log(state);
@@ -44,6 +59,7 @@ export default function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <ProjectNavItems items={data.sideMain} />
+        <MainChats chats={data.chats} />
       </SidebarContent>
     </Sidebar>
   );
