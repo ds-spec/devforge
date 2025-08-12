@@ -1,9 +1,21 @@
-import { Sidebar, SidebarTrigger } from "./ui/sidebar";
+"use client";
+
+import SideHeader from "./side-header";
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarTrigger,
+  useSidebar,
+} from "./ui/sidebar";
 
 export default function AppSidebar() {
+  const { state } = useSidebar();
+  console.log(state);
   return (
-    <Sidebar collapsible="icon">
-      <SidebarTrigger className="text-white hover:bg-gray-500 hover:text-white cursor-pointer !size-8" />
+    <Sidebar collapsible="icon" className="px-2 py-3">
+      <SidebarHeader>
+        <SideHeader />
+      </SidebarHeader>
     </Sidebar>
   );
 }

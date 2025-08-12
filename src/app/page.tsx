@@ -8,6 +8,6 @@ export default function Home() {
   return (
     <div className="relative w-full h-screen shadow-inner backdrop-blur-3xl">
       <SearchBar />
-    </div>
+    </div>  
   );
 }
