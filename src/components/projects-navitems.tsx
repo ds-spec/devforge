@@ -24,7 +24,7 @@ export default function ProjectNavItems({
           {items?.map((item) => (
             <SidebarMenuItem key={item.title} className="text-white">
               <SidebarMenuButton
-                className="mt-1 cursor-pointer hover:bg-neutral-800 hover:text-white"
+                className="cursor-pointer hover:bg-neutral-800 hover:text-white active:bg-neutral-700 active:text-white py-5"
                 tooltip={item.title}
               >
                 {item.icon && <item.icon />}

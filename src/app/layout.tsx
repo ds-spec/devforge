@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistMono.variable} ${geistSans.variable} ${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
+        className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
       >
         <SidebarProvider className="bg-transparent">
           <AppSidebar />

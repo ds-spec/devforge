@@ -53,7 +53,7 @@ export default function AppSidebar() {
   const { state } = useSidebar();
   console.log(state);
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar className="bg-neutral-950" collapsible="icon">
       <SidebarHeader>
         <SideHeader />
       </SidebarHeader>
