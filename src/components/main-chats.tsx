@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
+import { Delete, Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,11 +48,13 @@ export default function MainChats({ chats }: { chats: Chats[] }) {
                   <MoreHorizontal className="hover:bg-transparent text-white" />
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48 bg-neutral-900 text-white border-none  rounded-lg">
-                <DropdownMenuItem className="hover:bg-neutral-800">
+              <DropdownMenuContent className="w-36 bg-neutral-900 text-white border-none rounded-lg">
+                <DropdownMenuItem className="hover:!bg-neutral-800 hover:!text-white cursor-pointer">
+                  <Edit2 />
                   <span>Rename</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="hover:!bg-neutral-800 hover:!text-white cursor-pointer">
+                  <Trash2 />
                   <span>Delete</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
