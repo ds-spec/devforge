@@ -50,7 +50,7 @@ export default function UserDetails({ user }: { user: UserProps }) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-neutral-500" />
             <DropdownMenuGroup>
               <DropdownMenuItem className="hover:!bg-neutral-800 cursor-pointer">
                 <LogOut className="text-neutral-500 " size={"0.9em"} />

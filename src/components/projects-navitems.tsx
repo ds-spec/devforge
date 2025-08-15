@@ -24,11 +24,11 @@ export default function ProjectNavItems({
           {items?.map((item) => (
             <SidebarMenuItem key={item.title} className="text-white">
               <SidebarMenuButton
-                className="cursor-pointer hover:bg-neutral-800 hover:text-white active:bg-neutral-700 active:text-white py-5"
+                className="cursor-pointer flex items-center gap-2 hover:bg-neutral-800 hover:text-white active:bg-neutral-700 active:text-white"
                 tooltip={item.title}
               >
-                {item.icon && <item.icon />}
-                <span className="font-montserrat text-md font-semibold tracking-wide">
+                {item.icon && <item.icon className="shrink-0 w-5 h-5" />}
+                <span className="font-montserrat text-sm tracking-wide leading-none">
                   {item.title}
                 </span>
               </SidebarMenuButton>

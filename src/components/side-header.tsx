@@ -10,7 +10,7 @@ export default function SideHeader() {
         <SidebarTrigger className="text-white hover:bg-neutral-800 ml-0.5 hover:text-white cursor-pointer" />
         <h4
           className={`text-white font-roboto font-semibold text-md ${
-            state === "collapsed" ? "hidden" : ""
+            state === "collapsed" ? "opacity-0 w-0 pointer-events-none" : ""
           }`}
         >
           Synth.AI
@@ -18,7 +18,7 @@ export default function SideHeader() {
       </div>
       <Search
         className={`text-white size-8 hover:bg-neutral-800 ${
-          state === "collapsed" ? "hidden" : ""
+          state === "collapsed" ? "opacity-0 size-0 pointer-events-none" : ""
         } p-2 rounded-md cursor-pointer`}
       />
     </div>

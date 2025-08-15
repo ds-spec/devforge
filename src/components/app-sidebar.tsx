@@ -62,7 +62,12 @@ export default function AppSidebar() {
   const { state } = useSidebar();
   console.log(state);
   return (
-    <Sidebar className="bg-neutral-950" collapsible="icon">
+    <Sidebar
+      className={`transition-all duration-150 ease-in-out ${
+        state === "collapsed" ? "bg-transparent" : "bg-neutral-950"
+      } ease-in`}
+      collapsible="icon"
+    >
       <SidebarHeader>
         <SideHeader />
       </SidebarHeader>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto, Montserrat } from "next/font/google";
+import { Geist, Geist_Mono, Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
@@ -13,9 +13,10 @@ const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
 });
-const montserrat = Montserrat({
+const montserrat = Poppins({
   variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const geistMono = Geist_Mono({

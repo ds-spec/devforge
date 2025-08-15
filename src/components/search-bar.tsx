@@ -55,7 +55,7 @@ export default function SearchBar() {
 
   return (
     <div className="w-full h-full flex flex-col gap-20 justify-center items-center">
-      <h3 className="text-gradient font-roboto text-4xl">Hello, Synth</h3>
+      <h3 className="text-gradient font-roboto text-5xl">Hello, Deep</h3>
       <div className="relative w-[45vw] rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)] animate-border-gradient">
         <div className="transition-transform duration-300 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-600">
           <Input
