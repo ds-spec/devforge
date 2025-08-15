@@ -158,3 +158,30 @@
   animation: animatedborder 3s linear infinite;
   will-change: background;
 } */
+
+.animated-gradient {
+  animation: animatedgradient 1s linear ease;
+  background-size: 200%;
+  /* clip-path: circle(50%); */
+}
+
+@keyframes animatedgradient {
+  0% {
+    transform: translateY(0%);
+  }
+  /* 30% {
+    transform: translateY(20%);
+  }
+  40% {
+    transform: translateY(30%);
+  }
+  70% {
+    transform: translateY(40%);
+  }
+  85% {
+    transform: translateY(50%);
+  } */
+  100% {
+    transform: translateY(55%);
+  }
+}
