@@ -9,7 +9,7 @@ import {
 interface ProjectNavItem {
   title: string;
   url: string;
-  icon: LucideIcon;
+  icon: React.ReactNode;
 }
 
 export default function ProjectNavItems({
@@ -24,10 +24,10 @@ export default function ProjectNavItems({
           {items?.map((item) => (
             <SidebarMenuItem key={item.title} className="text-white">
               <SidebarMenuButton
-                className="cursor-pointer flex items-center gap-2 hover:bg-neutral-800 hover:text-white active:bg-neutral-700 active:text-white"
+                className="cursor-pointer hover:bg-neutral-800 hover:text-white active:bg-neutral-700 active:text-white"
                 tooltip={item.title}
               >
-                {item.icon && <item.icon className="shrink-0 w-5 h-5" />}
+                {item.icon}
                 <span className="font-montserrat text-sm tracking-wide leading-none">
                   {item.title}
                 </span>

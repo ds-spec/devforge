@@ -10,6 +10,7 @@ import {
   useSidebar,
 } from "./ui/sidebar";
 import ProjectNavItems from "./projects-navitems";
+import { motion } from "motion/react";
 import MainChats from "./main-chats";
 import UserDetails from "./user-details";
 
@@ -26,22 +27,22 @@ export default function AppSidebar() {
       {
         title: "New Chat",
         url: "#",
-        icon: SquarePen,
+        icon: <SquarePen size={"1.9em"} />,
       },
       {
         title: "Projects",
         url: "#",
-        icon: FolderKanban,
+        icon: <FolderKanban size={"1.3em"} />,
       },
       {
         title: "Notes",
         url: "#",
-        icon: NotebookPen,
+        icon: <NotebookPen size={"1.3em"} />,
       },
       {
         title: "Bookmarks",
         url: "#",
-        icon: Bookmark,
+        icon: <Bookmark size={"1.3em"} />,
       },
     ],
     chats: [
@@ -60,13 +61,12 @@ export default function AppSidebar() {
     ],
   };
   const { state } = useSidebar();
-  console.log(state);
   return (
     <Sidebar
-      className={`transition-all duration-150 ease-in-out ${
-        state === "collapsed" ? "bg-transparent" : "bg-neutral-950"
-      } ease-in`}
       collapsible="icon"
+      className={`border-r border-neutral-800 ${
+        state === "collapsed" ? "bg-transparent" : "bg-[#1c1c1c]"
+      } overflow-hidden`}
     >
       <SidebarHeader>
         <SideHeader />
