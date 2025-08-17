@@ -2,8 +2,6 @@
 
 import SearchBar from "@/components/search-bar";
 
-// animate-[animatedgradient_2s_ease_infinite]
-
 export default function Home() {
   return (
     <div className="relative w-full h-screen shadow-inner backdrop-blur-3xl">

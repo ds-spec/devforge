@@ -3,6 +3,7 @@
 import { ArrowUp } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { useRef, useState } from "react";
+import usePrompt from "@/hooks/usePrompt";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -33,7 +34,7 @@ const Input = ({ textareaRef, inputValue, handleChange }: InputProps) => {
       value={inputValue}
       aria-label="Enter your input here"
       onChange={handleChange}
-      placeholder="Ask GPT"
+      placeholder="Ask Synth"
       className="bg-transparent w-full focus:outline-none rounded-3xl border-none shadow-none  focus:!ring-transparent text-white !placeholder-neutral-300/30 !text-lg break-words resize-none"
     />
   );
@@ -44,7 +45,7 @@ export default function SearchBar() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
+    setPrompt(e.target.value);
   };
 
   const handleSubmit = () => {
@@ -53,16 +54,17 @@ export default function SearchBar() {
     textareaRef.current?.focus();
   };
 
+  const { prompt, setPrompt } = usePrompt();
+
   return (
-    <div className="w-full h-full flex flex-col gap-20 justify-center items-center">
-      <div className=""></div>
+    <div className="w-full h-full flex flex-col gap-14 justify-center items-center">
       <h3 className="text-gradient font-roboto text-5xl">Hello, Deep</h3>
       <div className="relative w-[45vw] rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)] animate-border-gradient">
         <div className="transition-transform duration-300 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-600">
           <Input
             handleChange={handleChange}
             textareaRef={textareaRef}
-            inputValue={inputValue}
+            inputValue={prompt}
           />
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4"></div>

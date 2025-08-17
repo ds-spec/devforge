@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
+import PromptProvider from "@/context/PromptContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,10 +40,12 @@ export default function RootLayout({
       <body
         className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
       >
-        <SidebarProvider className="bg-transparent">
-          <AppSidebar />
-          {children}
-        </SidebarProvider>
+        <PromptProvider>
+          <SidebarProvider className="bg-transparent">
+            <AppSidebar />
+            {children}
+          </SidebarProvider>
+        </PromptProvider>
       </body>
     </html>
   );
