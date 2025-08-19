@@ -2,8 +2,9 @@
 
 import { ArrowUp } from "lucide-react";
 import { Textarea } from "./ui/textarea";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import usePrompt from "@/hooks/usePrompt";
+import { Button } from "./ui/button";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -55,6 +56,28 @@ export default function SearchBar() {
   };
 
   const { prompt, setPrompt } = usePrompt();
+
+  const dummyPost = async ({
+    data,
+  }: {
+    data: { id: number; title: string };
+  }) => {
+    const response = await fetch("/api/hello", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    console.log(result);
+  };
+
+  const dummyGet = async () => {
+    const response = await fetch("/api/hello", { method: "GET" });
+    const result = await response.json();
+    console.log(result);
+  };
 
   return (
     <div className="w-full h-full flex flex-col gap-14 justify-center items-center">

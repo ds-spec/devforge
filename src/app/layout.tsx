@@ -5,11 +5,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 import PromptProvider from "@/context/PromptContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
@@ -18,11 +13,6 @@ const montserrat = Poppins({
   variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["400", "700"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
