@@ -13,8 +13,15 @@ import ProjectNavItems from "./projects-navitems";
 import { motion } from "motion/react";
 import MainChats from "./main-chats";
 import UserDetails from "./user-details";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { useSession } from "next-auth/react";
 
 export default function AppSidebar() {
+  const { data: session } = useSession();
+  const { state } = useSidebar();
+
+  if (!session?.user) return null;
   const data = {
     user: {
       name: "Synth",
@@ -60,7 +67,6 @@ export default function AppSidebar() {
       },
     ],
   };
-  const { state } = useSidebar();
   return (
     <Sidebar
       collapsible="icon"

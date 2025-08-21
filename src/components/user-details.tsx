@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { signOut } from "next-auth/react";
 
 interface UserProps {
   name: string;
@@ -52,7 +53,10 @@ export default function UserDetails({ user }: { user: UserProps }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-neutral-500" />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="hover:!bg-neutral-800 cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => signOut()}
+                className="hover:!bg-neutral-800 cursor-pointer"
+              >
                 <LogOut className="text-neutral-500 " size={"0.9em"} />
                 <span className="text-white ">Logout</span>
               </DropdownMenuItem>
