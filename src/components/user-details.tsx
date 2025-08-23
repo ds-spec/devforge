@@ -1,3 +1,5 @@
+"use client";
+
 import { LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
@@ -10,15 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface UserProps {
   name: string;
   email: string;
-  avatar: string;
+  image: string;
 }
 
 export default function UserDetails({ user }: { user: UserProps }) {
+  const { data: session } = useSession();
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -29,11 +32,14 @@ export default function UserDetails({ user }: { user: UserProps }) {
               className="active:bg-neutral-700 hover:!bg-neutral-800 cursor-pointer"
             >
               <Avatar className="w-8 h-8 rounded-full">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage
+                  src={session?.user?.image ?? ""}
+                  alt={session?.user?.name ?? ""}
+                />
                 <AvatarFallback>D</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-white text-sm leading-tight text-left">
-                <span className="font-montserrat">{user.name}</span>
+                <span className="font-montserrat">{session?.user?.name}</span>
                 <span className="text-neutral-600 tracking-tight">
                   Freemium
                 </span>
@@ -47,7 +53,7 @@ export default function UserDetails({ user }: { user: UserProps }) {
                   <User className="text-neutral-500" size={"0.9em"} />
                 </Avatar>
                 <div className="text-neutral-400 text-sm leading-tight text-left">
-                  <span>{user.email}</span>
+                  <span>{session?.user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String?
-  image String?
-  email String  @unique
-  chats Chat[]
+  id       Int     @id @default(autoincrement())
+  password String?
+  name     String?
+  image    String?
+  email    String  @unique
+  chats    Chat[]
 }
 
 model Chat {

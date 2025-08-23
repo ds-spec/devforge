@@ -72,7 +72,7 @@ export default function SearchBar() {
         } text-center font-roboto text-4xl`}
       >
         {session?.user ? (
-          "Hello, Deep"
+          `Hello, ${session?.user?.name}`
         ) : (
           <>
             Meet Synth, <br /> Your Personal Research Assistant!

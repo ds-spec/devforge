@@ -1,7 +1,12 @@
+import { Form } from "@/components/ui/form";
+import { z } from "zod";
+
 export default function SignIn() {
-  return (
-    <div>
-      <h3>Sign in</h3>
-    </div>
-  );
+  const formSchema = z.object({
+    username: z
+      .string()
+      .min(2, { message: "Username must be atleast 2 characters" }),
+    email: z.email()
+  });
+  return <></>;
 }
