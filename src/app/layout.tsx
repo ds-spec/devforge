@@ -6,6 +6,7 @@ import AppSidebar from "@/components/app-sidebar";
 import PromptProvider from "@/context/PromptContext";
 import { SessionProvider } from "next-auth/react";
 import AppProvider from "./AppProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
       >
         <AppProvider>
+          <Toaster />
           <AppSidebar />
           {children}
         </AppProvider>
