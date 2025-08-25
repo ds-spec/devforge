@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import FloatingInput from "./floating-input";
 
 const formSchema = z.object({
   email: z
@@ -25,9 +26,9 @@ const formSchema = z.object({
     .string()
     .min(6, { message: "Password must be at least 6 characters" }),
 });
-type FormData = z.infer<typeof formSchema>;
+export type FormData = z.infer<typeof formSchema>;
 export default function SignIn() {
-  const form = useForm({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -69,49 +70,19 @@ export default function SignIn() {
           className="flex flex-col gap-4 items-center justify-center w-[20vw]"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="relative w-full">
-                <FormControl className="p-6">
-                  <Input
-                    className="relative text-white rounded-full text-xl peer placeholder-transparent focus:!ring-transparent"
-                    placeholder=" "
-                    {...field}
-                  />
-                </FormControl>
-                <FormLabel className="absolute top-5 left-6  text-white transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:text-gray-400  peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]">
-                  Email Address
-                </FormLabel>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="relative w-full">
-                <FormControl className="p-6">
-                  <Input
-                    type="password"
-                    className="relative text-white rounded-full text-xl peer placeholder-transparent focus:!ring-transparent"
-                    placeholder=" "
-                    {...field}
-                  />
-                </FormControl>
-                <FormLabel className="absolute top-5 left-6  text-white transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:text-gray-400  peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]">
-                  Password
-                </FormLabel>
-              </FormItem>
-            )}
-          />
+          <FloatingInput form={form} label="Email Address" />
+          <FloatingInput form={form} label="Password" />
           <Button
             type="submit"
             className="w-full cursor-pointer rounded-full py-6 text-md bg-white text-black hover:bg-gray-200"
           >
             Submit
           </Button>
+          <div className="flex items-center w-full">
+            <div className="flex-grow border-t border-neutral-600"></div>
+            <span className="text-neutral-500 px-2">OR</span>
+            <div className="flex-grow border-t border-neutral-600"></div>
+          </div>
         </form>
       </Form>
     </div>
