@@ -66,24 +66,24 @@ export default function SignIn() {
       </div>
       <Form {...form}>
         <form
-          className="w-full flex flex-col items-center justify-center"
+          className="flex flex-col gap-4 items-center justify-center w-[20vw]"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="relative w-[20vw]">
-                {/* <FormLabel className="absolute text-white translate-y-0 transition-transform duration-300 peer-placeholder-shown:-translate-y-4">
-                  Email
-                </FormLabel> */}
+              <FormItem className="relative w-full">
                 <FormControl className="p-6">
                   <Input
-                    className="relative text-white rounded-full text-xl peer"
-                    placeholder="Email Address"
+                    className="relative text-white rounded-full text-xl peer placeholder-transparent focus:!ring-transparent"
+                    placeholder=" "
                     {...field}
                   />
                 </FormControl>
+                <FormLabel className="absolute top-5 left-6  text-white transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:text-gray-400  peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]">
+                  Email Address
+                </FormLabel>
               </FormItem>
             )}
           />
@@ -91,19 +91,27 @@ export default function SignIn() {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="relative w-[20vw]">
-                <FormLabel>Password</FormLabel>
-                <FormControl>
+              <FormItem className="relative w-full">
+                <FormControl className="p-6">
                   <Input
-                    className="text-white rounded-full p-6"
-                    placeholder="Password"
+                    type="password"
+                    className="relative text-white rounded-full text-xl peer placeholder-transparent focus:!ring-transparent"
+                    placeholder=" "
                     {...field}
                   />
                 </FormControl>
+                <FormLabel className="absolute top-5 left-6  text-white transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:text-gray-400  peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]">
+                  Password
+                </FormLabel>
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            className="w-full cursor-pointer rounded-full py-6 text-md bg-white text-black hover:bg-gray-200"
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
