@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FloatingInput from "./floating-input";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   email: z
@@ -63,25 +64,37 @@ export default function SignIn() {
     <div className="w-full flex flex-col items-center justify-center gap-4">
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-white text-3xl tracking-wide">Log in or sign up</h1>
-        <p></p>
+        <p className="text-sm text-neutral-500 max-w-sm text-center">
+          Your Personalised Research Assistant. Get mind maps, citations and
+          more.
+        </p>
       </div>
       <Form {...form}>
         <form
-          className="flex flex-col gap-4 items-center justify-center w-[20vw]"
+          className="flex flex-col gap-4 items-center justify-center w-[23vw] mt-6"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FloatingInput form={form} label="Email Address" />
-          <FloatingInput form={form} label="Password" />
+          <FloatingInput form={form} label="Email Address" type="email" />
+          <FloatingInput form={form} label="Password" type="password" />
           <Button
             type="submit"
             className="w-full cursor-pointer rounded-full py-6 text-md bg-white text-black hover:bg-gray-200"
           >
-            Submit
+            Continue
           </Button>
           <div className="flex items-center w-full">
             <div className="flex-grow border-t border-neutral-600"></div>
             <span className="text-neutral-500 px-2">OR</span>
             <div className="flex-grow border-t border-neutral-600"></div>
+          </div>
+          <div className="w-full flex flex-col items-center">
+            <Button
+              type="button"
+              onClick={() => signIn("google")}
+              className="w-full cursor-pointer rounded-full border border-neutral-600 py-6 text-md bg-transparent text-white hover:bg-neutral-800"
+            >
+              Continue with Google
+            </Button>
           </div>
         </form>
       </Form>
