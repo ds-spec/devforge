@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased `}
+        className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased debug-screens `}
       >
         <AppProvider>
           <Toaster />
