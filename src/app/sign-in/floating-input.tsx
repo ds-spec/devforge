@@ -30,7 +30,13 @@ export default function FloatingInput({ form, label, type }: InputProps) {
               {...field}
             />
           </FormControl>
-          <FormLabel className="absolute top-5 left-6 text-gray-600 transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-lg peer-focus:text-gray-400  peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]">
+          <FormLabel
+            className={`absolute left-6 text-gray-600 transition-all duration-300 ${
+              field.value
+                ? "text-sm -top-2 px-1.5 bg-[#111112] text-gray-400"
+                : "top-3 text-lg"
+            } peer-focus:text-gray-400 peer-focus:-top-2 peer-focus:text-sm peer-focus:px-1.5 peer-focus:bg-[#111112]`}
+          >
             {label}
           </FormLabel>
           <FormMessage />
