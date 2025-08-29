@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import FloatingInput from "./floating-input";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { FormState } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z
@@ -24,6 +24,7 @@ const formSchema = z.object({
 export type FormData = z.infer<typeof formSchema>;
 export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
+  const { push } = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,6 +51,7 @@ export default function SignIn() {
       const result = await response.json();
       console.log(result, "Registered user");
       setIsLoading(false);
+      push("/");
       form.reset();
     } catch (error) {
       console.error("Registration Failed:", error);
@@ -93,7 +95,7 @@ export default function SignIn() {
             <div className="w-full flex flex-col items-center">
               <Button
                 type="button"
-                onClick={() => signIn("google")}
+                onClick={() => signIn("google", { callbackUrl: "/" })}
                 className="w-full cursor-pointer rounded-full border border-neutral-600 py-6 text-md bg-transparent text-white hover:bg-neutral-800"
               >
                 Continue with Google

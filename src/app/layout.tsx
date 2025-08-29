@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto, Poppins } from "next/font/google";
+import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
-import PromptProvider from "@/context/PromptContext";
-import { SessionProvider } from "next-auth/react";
 import AppProvider from "./AppProvider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -31,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased debug-screens `}
+        className={`$${roboto.variable} ${montserrat.variable} bg-[#111112] antialiased`}
       >
         <AppProvider>
           <Toaster />
