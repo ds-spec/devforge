@@ -61,28 +61,7 @@ export const authOptions: NextAuthOptions = {
         await prisma.$disconnect();
       }
     },
-    async jwt({ token, user }) {
-      console.log("fire SESSION Callback");
-      if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        token.email = user.email;
-      }
-      console.log(token);
-      return token;
-    },
-    async session({ session, token }) {
-      console.log("fire SESSION Callback");
-      if (token) {
-        session.user = {
-          name: token.name,
-          email: token.email,
-        };
-      }
-      console.log(session);
-      return session;
-    },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl;
     },
   },

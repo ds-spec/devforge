@@ -68,8 +68,8 @@ export default function SearchBar() {
         animate={{ opacity: 1, y: -30 }}
         transition={{ duration: 0.5, ease: "easeIn" }}
         className={`text-gradient ${
-          !session?.user ? "leading-12 font-semibold" : ""
-        } text-center font-roboto text-4xl`}
+          !session?.user ? "leading-8 font-semibold" : ""
+        } text-center font-roboto text-3xl md:text-4xl`}
       >
         {session?.user ? (
           `Hello, ${session?.user?.name}`
@@ -79,8 +79,11 @@ export default function SearchBar() {
           </>
         )}
       </motion.h3>
-      <div className="relative w-[45vw] rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)] animate-border-gradient">
-        <div className="transition-transform duration-300 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-600">
+      {/* bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)]
+      animate-border-gradient */}
+      {/* border border-neutral-600 */}
+      <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300">
+        <div className="transition-transform duration-300 p-2 overflow-scroll rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-500">
           <Input
             handleChange={handleChange}
             textareaRef={textareaRef}
