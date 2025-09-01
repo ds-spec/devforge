@@ -82,12 +82,14 @@ export default function SearchBar() {
       {/* bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)]
       animate-border-gradient */}
       {/* border border-neutral-600 */}
-      <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300">
-        <div className="transition-transform duration-300 p-2 overflow-scroll rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-500">
-          <Input
-            handleChange={handleChange}
-            textareaRef={textareaRef}
-            inputValue={prompt}
+      <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden">
+        <div className="transition-transform duration-300 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-500">
+          <Textarea
+            className="max-h-[300px] text-white !text-lg border-none resize-none focus:!ring-transparent focus:outline-none overflow-scroll placeholder:text-neutral-600"
+            onChange={handleChange}
+            placeholder="Ask Synth"
+            ref={textareaRef}
+            value={prompt}
           />
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4"></div>
