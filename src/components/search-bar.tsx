@@ -39,7 +39,7 @@ const Input = ({ textareaRef, inputValue, handleChange }: InputProps) => {
       aria-label="Enter your input here"
       onChange={handleChange}
       placeholder="Ask Synth"
-      className="bg-transparent w-full focus:outline-none rounded-3xl border-none shadow-none  focus:!ring-transparent text-white !placeholder-neutral-300/30 !text-lg break-words resize-none"
+      className="max-h-[300px] text-white !text-lg border-none resize-none focus:!ring-transparent focus:outline-none overflow-scroll placeholder:text-neutral-600"
     />
   );
 };
@@ -83,13 +83,11 @@ export default function SearchBar() {
       animate-border-gradient */}
       {/* border border-neutral-600 */}
       <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden">
-        <div className="transition-transform duration-300 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-500">
-          <Textarea
-            className="max-h-[300px] text-white !text-lg border-none resize-none focus:!ring-transparent focus:outline-none overflow-scroll placeholder:text-neutral-600"
-            onChange={handleChange}
-            placeholder="Ask Synth"
-            ref={textareaRef}
-            value={prompt}
+        <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600 ">
+          <Input
+            handleChange={handleChange}
+            textareaRef={textareaRef}
+            inputValue={prompt}
           />
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4"></div>
