@@ -46,6 +46,7 @@ const Input = ({ textareaRef, inputValue, handleChange }: InputProps) => {
 
 export default function SearchBar() {
   const [inputValue, setInputValue] = useState("");
+  const [isEntered, setIsEntered] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { data: session } = useSession();
 
@@ -53,35 +54,50 @@ export default function SearchBar() {
     setPrompt(e.target.value);
   };
 
-  const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+  const { prompt, setPrompt } = usePrompt();
+  console.log(prompt, "prompt");
+
+  const handleResponse = async () => {
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+    });
+    const data = await res.json();
+    console.log(data);
+  };
+
+  const handleSubmit = async () => {
+    // if (!inputValue.trim()) return;
+    // handleResponse();
     setInputValue("");
+    setIsEntered(true);
     textareaRef.current?.focus();
   };
 
-  const { prompt, setPrompt } = usePrompt();
-
   return (
-    <div className="w-full h-full flex flex-col gap-14 justify-center items-center">
-      <motion.h3
-        initial={{ opacity: 0, y: 0 }}
-        animate={{ opacity: 1, y: -30 }}
-        transition={{ duration: 0.5, ease: "easeIn" }}
-        className={`text-gradient ${
-          !session?.user ? "leading-8 font-semibold" : ""
-        } text-center font-roboto text-3xl md:text-4xl`}
-      >
-        {session?.user ? (
-          `Hello, ${session?.user?.name}`
-        ) : (
-          <>
-            Meet Synth, <br /> Your Personal Research Assistant!
-          </>
-        )}
-      </motion.h3>
-      {/* bg-[conic-gradient(from_var(--angle),_#020618,_#52a9ff,_#2424b6,_#2a6ab8,_#7dd3fc,_#020618)]
-      animate-border-gradient */}
-      {/* border border-neutral-600 */}
+    <motion.div
+      animate={{ y: isEntered ? 320 : 0 }}
+      transition={{ type: "spring", damping: 25, stiffness: 100 }}
+      className="w-full h-full flex flex-col gap-14 justify-center items-center"
+    >
+      {!isEntered && (
+        <motion.h3
+          initial={{ opacity: 0, y: 0 }}
+          animate={{ opacity: 1, y: -30 }}
+          transition={{ duration: 0.5, ease: "easeIn" }}
+          className={`text-gradient ${
+            !session?.user ? "leading-8 font-semibold" : ""
+          } text-center font-roboto text-3xl md:text-4xl`}
+        >
+          {session?.user ? (
+            `Hello, ${session?.user?.name}`
+          ) : (
+            <>
+              Meet Synth, <br /> Your Personal Research Assistant!
+            </>
+          )}
+        </motion.h3>
+      )}
       <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden">
         <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600 ">
           <Input
@@ -95,6 +111,6 @@ export default function SearchBar() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

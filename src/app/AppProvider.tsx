@@ -12,7 +12,9 @@ export default function AppProvider({
   return (
     <SessionProvider>
       <PromptProvider>
-        <SidebarProvider className="bg-transparent">{children}</SidebarProvider>
+        <SidebarProvider defaultOpen={false} className="bg-transparent">
+          {children}
+        </SidebarProvider>
       </PromptProvider>
     </SessionProvider>
   );
