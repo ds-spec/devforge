@@ -8,6 +8,8 @@ import { Button } from "./ui/button";
 import { prisma } from "@/lib/prisma";
 import { motion } from "motion/react";
 import { useSession } from "next-auth/react";
+import ChatArea from "./chat-area";
+import ResponseArea from "./response-area";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -44,11 +46,26 @@ const Input = ({ textareaRef, inputValue, handleChange }: InputProps) => {
   );
 };
 
-export default function SearchBar() {
+export default function SearchBar({
+  isEntered,
+  setIsEntered,
+}: {
+  isEntered: boolean;
+  setIsEntered: (isEntered: boolean) => void;
+}) {
   const [inputValue, setInputValue] = useState("");
-  const [isEntered, setIsEntered] = useState(false);
+  const [messages, setMessages] = useState<
+    { prompt: string; responseData: string }[]
+  >([]);
+  // const [isEntered, setIsEntered] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { data: session } = useSession();
+
+  // const messages: {
+  //   prompt: string;
+  //   responseData: string;
+  // }[] = [];
+  console.log(messages, "messages");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value);
@@ -63,54 +80,76 @@ export default function SearchBar() {
       body: JSON.stringify({ prompt }),
     });
     const data = await res.json();
-    console.log(data);
+    return data.message;
   };
 
   const handleSubmit = async () => {
     // if (!inputValue.trim()) return;
-    // handleResponse();
+    const responseData = await handleResponse();
+    setMessages((prev) => [...prev, { prompt, responseData }]);
     setInputValue("");
     setIsEntered(true);
     textareaRef.current?.focus();
   };
 
   return (
-    <motion.div
-      animate={{ y: isEntered ? 320 : 0 }}
-      transition={{ type: "spring", damping: 25, stiffness: 100 }}
-      className="w-full h-full flex flex-col gap-14 justify-center items-center"
-    >
-      {!isEntered && (
-        <motion.h3
-          initial={{ opacity: 0, y: 0 }}
-          animate={{ opacity: 1, y: -30 }}
-          transition={{ duration: 0.5, ease: "easeIn" }}
-          className={`text-gradient ${
-            !session?.user ? "leading-8 font-semibold" : ""
-          } text-center font-roboto text-3xl md:text-4xl`}
-        >
-          {session?.user ? (
-            `Hello, ${session?.user?.name}`
-          ) : (
+    <>
+      {isEntered && (
+        <div className="absolute left-1/2 -translate-x-1/2  top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-scroll">
+          {messages?.map((message) => (
             <>
-              Meet Synth, <br /> Your Personal Research Assistant!
+              <div key={message.prompt} className="w-fit">
+                <ChatArea prompt={message.prompt} />
+              </div>
+              <div
+                key={message.responseData}
+                className="w-full flex justify-end mt-3"
+              >
+                <ResponseArea responseData={message.responseData} />
+              </div>
             </>
-          )}
-        </motion.h3>
+          ))}
+        </div>
       )}
-      <div className="relative bottom-0 w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden">
-        <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600 ">
-          <Input
-            handleChange={handleChange}
-            textareaRef={textareaRef}
-            inputValue={prompt}
-          />
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4"></div>
-            <SubmitButton handleSubmit={handleSubmit} />
+
+      <motion.div
+        animate={{ y: isEntered ? 320 : 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 100 }}
+        className="w-full h-full flex flex-col gap-14 justify-center items-center"
+      >
+        {!isEntered && (
+          <motion.h3
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: -30 }}
+            transition={{ duration: 0.5, ease: "easeIn" }}
+            className={`text-gradient ${
+              !session?.user ? "leading-8 font-semibold" : ""
+            } text-center font-roboto text-3xl md:text-4xl`}
+          >
+            {session?.user ? (
+              `Hello, ${session?.user?.name}`
+            ) : (
+              <>
+                Meet Synth, <br /> Your Personal Research Assistant!
+              </>
+            )}
+          </motion.h3>
+        )}
+
+        <div className="relative w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden">
+          <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600 ">
+            <Input
+              handleChange={handleChange}
+              textareaRef={textareaRef}
+              inputValue={prompt}
+            />
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-4"></div>
+              <SubmitButton handleSubmit={handleSubmit} />
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 }
