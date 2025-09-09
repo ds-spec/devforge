@@ -10,11 +10,13 @@ import { motion } from "motion/react";
 import { useSession } from "next-auth/react";
 import ChatArea from "./chat-area";
 import ResponseArea from "./response-area";
+import Typewriter from "./Typewriter";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   inputValue: string;
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleSubmit: () => void;
 }
 
 interface SubmitButtonProps {
@@ -33,9 +35,20 @@ const SubmitButton = ({ handleSubmit }: SubmitButtonProps) => {
   );
 };
 
-const Input = ({ textareaRef, inputValue, handleChange }: InputProps) => {
+const Input = ({
+  textareaRef,
+  inputValue,
+  handleChange,
+  handleSubmit,
+}: InputProps) => {
   return (
     <Textarea
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          handleSubmit();
+        }
+      }}
       ref={textareaRef}
       value={inputValue}
       aria-label="Enter your input here"
@@ -53,7 +66,6 @@ export default function SearchBar({
   isEntered: boolean;
   setIsEntered: (isEntered: boolean) => void;
 }) {
-  const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<
     { prompt: string; responseData: string }[]
   >([]);
@@ -84,10 +96,10 @@ export default function SearchBar({
   };
 
   const handleSubmit = async () => {
-    // if (!inputValue.trim()) return;
+    if (!prompt.trim()) return;
     const responseData = await handleResponse();
     setMessages((prev) => [...prev, { prompt, responseData }]);
-    setInputValue("");
+    setPrompt("");
     setIsEntered(true);
     textareaRef.current?.focus();
   };
@@ -95,19 +107,19 @@ export default function SearchBar({
   return (
     <>
       {isEntered && (
-        <div className="absolute left-1/2 -translate-x-1/2  top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-scroll">
-          {messages?.map((message) => (
-            <>
-              <div key={message.prompt} className="w-fit">
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-hidden">
+          {messages?.map((message, idx) => (
+            <div key={idx} className="mb-5">
+              <div key={message.prompt} className="w-full flex justify-end">
                 <ChatArea prompt={message.prompt} />
               </div>
               <div
                 key={message.responseData}
-                className="w-full flex justify-end mt-3"
+                className="w-full flex justify-start mt-4"
               >
                 <ResponseArea responseData={message.responseData} />
               </div>
-            </>
+            </div>
           ))}
         </div>
       )}
@@ -142,6 +154,7 @@ export default function SearchBar({
               handleChange={handleChange}
               textareaRef={textareaRef}
               inputValue={prompt}
+              handleSubmit={handleSubmit}
             />
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4"></div>
