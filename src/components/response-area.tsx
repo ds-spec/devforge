@@ -1,3 +1,5 @@
+import Typewriter from "./Typewriter";
+
 export default function ResponseArea({
   responseData,
 }: {
@@ -6,7 +8,8 @@ export default function ResponseArea({
   console.log(responseData, "response");
   return (
     <div className="text-white justify-end">
-      <h4>{responseData}</h4>
+      <Typewriter text={responseData || ""} speed={10} />
+      {/* <h4>{responseData}</h4> */}
     </div>
   );
 }

@@ -1,16 +1,13 @@
 "use client";
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Square } from "lucide-react";
 import { Textarea } from "./ui/textarea";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import usePrompt from "@/hooks/usePrompt";
-import { Button } from "./ui/button";
-import { prisma } from "@/lib/prisma";
 import { motion } from "motion/react";
 import { useSession } from "next-auth/react";
 import ChatArea from "./chat-area";
 import ResponseArea from "./response-area";
-import Typewriter from "./Typewriter";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -21,17 +18,32 @@ interface InputProps {
 
 interface SubmitButtonProps {
   handleSubmit: () => void;
+  isGeneratingResponse: boolean;
 }
 
-const SubmitButton = ({ handleSubmit }: SubmitButtonProps) => {
+const SubmitButton = ({
+  handleSubmit,
+  isGeneratingResponse,
+}: SubmitButtonProps) => {
   return (
-    <button
-      className="rounded-full bg-neutral-700 hover:bg-neutral-800 transition-colors duration-100 cursor-pointer p-2"
-      onClick={handleSubmit}
-      aria-label="Send message"
-    >
-      <ArrowUp color="#fff" size={".7em"} />
-    </button>
+    <>
+      {isGeneratingResponse ? (
+        <button
+          className="rounded-full bg-neutral-700 hover:bg-neutral-800 transition-colors animate-pulse duration-100 cursor-pointer p-2"
+          aria-label="Send message"
+        >
+          <Square fill="#fff" size={".7em"} />
+        </button>
+      ) : (
+        <button
+          className="rounded-full bg-neutral-700 hover:bg-neutral-800 transition-colors duration-100 cursor-pointer p-2"
+          onClick={handleSubmit}
+          aria-label="Send message"
+        >
+          <ArrowUp color="#fff" size={".7em"} />
+        </button>
+      )}
+    </>
   );
 };
 
@@ -72,6 +84,7 @@ export default function SearchBar({
   // const [isEntered, setIsEntered] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { data: session } = useSession();
+  const [isGeneratingResponse, setIsGeneratingResponse] = useState(false);
 
   // const messages: {
   //   prompt: string;
@@ -87,12 +100,19 @@ export default function SearchBar({
   console.log(prompt, "prompt");
 
   const handleResponse = async () => {
-    const res = await fetch("/api/gemini", {
-      method: "POST",
-      body: JSON.stringify({ prompt }),
-    });
-    const data = await res.json();
-    return data.message;
+    try {
+      setIsGeneratingResponse(true);
+      const res = await fetch("/api/gemini", {
+        method: "POST",
+        body: JSON.stringify({ prompt }),
+      });
+      const data = await res.json();
+      return data.message;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsGeneratingResponse(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -107,7 +127,7 @@ export default function SearchBar({
   return (
     <>
       {isEntered && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-hidden">
+        <div className="absolute left-1/2 -translate-x-1/2 h-[560px] top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-scroll hide-scrollbar">
           {messages?.map((message, idx) => (
             <div key={idx} className="mb-5">
               <div key={message.prompt} className="w-full flex justify-end">
@@ -158,7 +178,10 @@ export default function SearchBar({
             />
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4"></div>
-              <SubmitButton handleSubmit={handleSubmit} />
+              <SubmitButton
+                handleSubmit={handleSubmit}
+                isGeneratingResponse={isGeneratingResponse}
+              />
             </div>
           </div>
         </div>

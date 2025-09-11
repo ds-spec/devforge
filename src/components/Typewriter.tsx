@@ -10,15 +10,23 @@ export default function Typewriter({
   speed: number;
 }) {
   const [outputText, setOutputText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  console.log(outputText);
   useEffect(() => {
-    const splittedText = text.split("");
-    console.log(splittedText);
-    for (let i = 0; i < splittedText.length; i++) {
-      setTimeout(() => {
-        console.log(splittedText[i]);
-        setOutputText(splittedText[i]);
-      }, speed * 1000);
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setOutputText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
+      }, speed);
+      return () => clearTimeout(timer);
     }
-  }, [text, speed]);
+  }, [text, speed, currentIndex]);
+
+  useEffect(() => {
+    setOutputText("");
+    setCurrentIndex(0);
+  }, [text]);
+
   return <div className="text-white text-lg px-8">{outputText}</div>;
 }
