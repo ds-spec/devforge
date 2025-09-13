@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Typewriter({
   text,
@@ -12,7 +14,7 @@ export default function Typewriter({
   const [outputText, setOutputText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  console.log(outputText);
+  // console.log(outputText);
   useEffect(() => {
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
@@ -28,5 +30,10 @@ export default function Typewriter({
     setCurrentIndex(0);
   }, [text]);
 
-  return <div className="text-white text-lg px-8">{outputText}</div>;
+  return (
+    <div className="text-white text-lg px-8 whitespace-break-spaces">
+      {outputText}
+      {/* <ReactMarkdown remarkPlugins={[remarkGfm]}></ReactMarkdown> */}
+    </div>
+  );
 }

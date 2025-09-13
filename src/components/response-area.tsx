@@ -5,7 +5,6 @@ export default function ResponseArea({
 }: {
   responseData: string;
 }) {
-  console.log(responseData, "response");
   return (
     <div className="text-white justify-end">
       <Typewriter text={responseData || ""} speed={10} />
