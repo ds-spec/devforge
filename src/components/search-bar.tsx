@@ -8,6 +8,8 @@ import { motion } from "motion/react";
 import { useSession } from "next-auth/react";
 import ChatArea from "./chat-area";
 import ResponseArea from "./response-area";
+import FileUpload from "./file-upload";
+import Image from "next/image";
 
 interface InputProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -82,14 +84,26 @@ export default function SearchBar({
     { prompt: string; responseData: string }[]
   >([]);
   // const [isEntered, setIsEntered] = useState(false);
+  const [fileName, setFileName] = useState("");
+  const [fileType, setFileType] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { data: session } = useSession();
   const [isGeneratingResponse, setIsGeneratingResponse] = useState(false);
 
   console.log(messages, "messages");
+  console.log(fileType, "typeFile");
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value);
+  };
+
+  const switchFileIcons = (type: string) => {
+    switch (type) {
+      case "pdf":
+        return "pdf";
+      case "jpeg":
+        return "image";
+    }
   };
 
   const { prompt, setPrompt } = usePrompt();
@@ -123,7 +137,23 @@ export default function SearchBar({
 
   return (
     <div className="w-full relative h-full flex flex-col gap-14 justify-center items-center">
-      {!isEntered && (
+      {isEntered ? (
+        <div className="absolute left-1/2 -translate-x-1/2 h-[560px] top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-scroll hide-scrollbar">
+          {messages?.map((message, idx) => (
+            <div key={idx} className="mb-5">
+              <div key={message.prompt} className="w-full flex justify-end">
+                <ChatArea prompt={message.prompt} />
+              </div>
+              <div
+                key={message.responseData}
+                className="w-full flex justify-start mt-4"
+              >
+                <ResponseArea responseData={message.responseData} />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
         <motion.h3
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: -30 }}
@@ -142,29 +172,28 @@ export default function SearchBar({
         </motion.h3>
       )}
 
-      {isEntered && (
-        <div className="absolute left-1/2 -translate-x-1/2 h-[560px] top-1/12 w-[95vw] md:w-[70vw] lg:w-[50vw] overflow-scroll hide-scrollbar">
-          {messages?.map((message, idx) => (
-            <div key={idx} className="mb-5">
-              <div key={message.prompt} className="w-full flex justify-end">
-                <ChatArea prompt={message.prompt} />
-              </div>
-              <div
-                key={message.responseData}
-                className="w-full flex justify-start mt-4"
-              >
-                <ResponseArea responseData={message.responseData} />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
       <motion.div
         animate={{ y: isEntered ? 320 : 0 }}
         transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
         className="relative w-[95vw] md:w-[70vw] lg:w-[50vw] shadow-xl shadow-black/20 rounded-3xl p-[2px] transition-transform duration-300 overflow-hidden"
       >
-        <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600 ">
+        <div className="transition-all duration-200 p-2 rounded-3xl bg-neutral-900 backdrop-blur-xl font-roboto text-3xl mx-auto border border-neutral-800 focus-within:!border-neutral-600">
+          {fileName && fileType && (
+            <div className="flex flex-col gap-2 items-start max-w-[200px] rounded-2xl bg-neutral-800 px-3 py-3">
+              <p className="text-sm w-full text-white truncate">{fileName}</p>
+              <div className="flex items-center gap-2">
+                <Image
+                  src={`/images/${switchFileIcons(fileType.split("/")[1])}.png`}
+                  width={16}
+                  height={16}
+                  alt={`${switchFileIcons(fileType.split("/")[1])}-upload`}
+                />
+                <p className="text-sm w-full uppercase text-neutral-500 font-semibold">
+                  {fileType.split("/")[1]}
+                </p>
+              </div>
+            </div>
+          )}
           <Input
             handleChange={handleChange}
             textareaRef={textareaRef}
@@ -172,7 +201,14 @@ export default function SearchBar({
             handleSubmit={handleSubmit}
           />
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4"></div>
+            <div className="flex items-center gap-4">
+              <FileUpload
+                setFileName={setFileName}
+                setFileType={setFileType}
+                fileName={fileName}
+                fileType={fileType}
+              />
+            </div>
             <SubmitButton
               handleSubmit={handleSubmit}
               isGeneratingResponse={isGeneratingResponse}

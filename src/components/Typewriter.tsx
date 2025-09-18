@@ -31,9 +31,30 @@ export default function Typewriter({
   }, [text]);
 
   return (
-    <div className="text-white text-lg px-8 whitespace-break-spaces">
-      {outputText}
-      {/* <ReactMarkdown remarkPlugins={[remarkGfm]}></ReactMarkdown> */}
+    <div className="text-white text-lg px-8 whitespace-break-spaces overflow-scroll">
+      {/* {outputText} */}
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          table: ({ node, ...props }) => (
+            <table className="min-w-full text-sm" {...props} />
+          ),
+          th: ({ node, ...props }) => (
+            <th
+              className="border-b border-neutral-700 px-6 py-3 text-center min-w-[200px]"
+              {...props}
+            />
+          ),
+          td: ({ node, ...props }) => (
+            <td
+              className="border-b-2 border-neutral-700/25 px-6 py-2 font-light"
+              {...props}
+            />
+          ),
+        }}
+      >
+        {outputText}
+      </ReactMarkdown>
     </div>
   );
 }
